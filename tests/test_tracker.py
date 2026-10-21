@@ -44,6 +44,12 @@ class TrackerTest(unittest.TestCase):
                 self.run_command(*args)
         self.assertFalse(tracker.DATA.exists())
 
+    def test_menu_adds_a_visit_without_command_flags(self):
+        answers = ['1', 'Test movie', '2026-10-30', '19:00', '', '12', 'H-20', 'IMAX GT', 'Good seat', '2', '5']
+        with patch('builtins.input', side_effect=answers), contextlib.redirect_stdout(io.StringIO()):
+            tracker.interactive()
+        self.assertEqual(tracker.read()[0]['seat'], 'H-20')
+
 
 if __name__ == '__main__':
     unittest.main()

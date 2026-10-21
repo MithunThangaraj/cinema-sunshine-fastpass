@@ -25,15 +25,20 @@
   box.style.cssText = 'position:fixed;bottom:20px;right:20px;z-index:2147483647;background:#16202b;color:white;padding:16px;border:2px solid #70cfb1;border-radius:12px;font:14px/1.5 sans-serif;max-width:320px;box-shadow:0 3px 16px #0006';
   const label = document.createElement('div');
   const scheduleLabel = document.createElement('label');
-  scheduleLabel.textContent = 'Optional start time (Japan time)';
+  scheduleLabel.textContent = 'Japan time (JST)';
   scheduleLabel.style.cssText = 'display:block;margin-top:10px';
   const schedule = document.createElement('input');
   schedule.type = 'datetime-local';
   schedule.style.cssText = 'display:block;margin-top:4px;color:black;background:white';
   scheduleLabel.append(schedule);
+  const scheduleDetails = document.createElement('details');
+  const scheduleSummary = document.createElement('summary');
+  scheduleSummary.textContent = 'Start at opening time (optional)';
+  scheduleSummary.style.cssText = 'cursor:pointer;margin-top:8px';
+  scheduleDetails.append(scheduleSummary, scheduleLabel);
   const button = document.createElement('button');
   button.style.cssText = 'margin-top:10px;padding:8px 15px;cursor:pointer;background:#a7f3d0;color:#10251b;border:0;border-radius:6px;font-weight:bold';
-  box.append(label, scheduleLabel, button);
+  box.append(label, scheduleDetails, button);
   document.body.append(box);
 
   function save() {
@@ -108,7 +113,7 @@
     schedule.disabled = true;
     check();
   });
-  if (!active) stop('Ready — press Start retries on the booking entry page.');
+  if (!active) stop('Cinema Sunshine Fastpass — ready.');
   else schedule.disabled = true;
   window.addEventListener('hashchange', check);
   window.addEventListener('popstate', check);

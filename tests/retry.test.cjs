@@ -27,7 +27,7 @@ function tab({store = new Map(), now = Date.parse('2026-10-27T11:59:00Z'), hash 
   const context = {document, location, sessionStorage, Date:Clock, GM_notification: n => notifications.push(n),
     window:{addEventListener:(e, fn) => { listeners[e] = fn; }}, setInterval:fn => { interval = fn; }};
   vm.runInNewContext(source, context);
-  const box = body.children[1], label = box.children[0], schedule = box.children[1].children[0], button = box.children[2];
+  const box = body.children[1], label = box.children[0], schedule = box.children[1].children[1].children[0], button = box.children[2];
   return {store, document, location, content, controls, notifications, label, schedule,
     click: () => button.click(), tick(ms = 0) { clock += ms; interval(); },
     get reloads() { return reloads; }, get now() { return clock; }};

@@ -1,101 +1,65 @@
 # Cinema Sunshine Fastpass
 
-A small browser script for getting into Cinema Sunshine bookings when the site is busy. It refreshes the current page every 10 seconds and stops when seat selection opens.
+Refresh a busy Cinema Sunshine booking page every 10 seconds. Stop when the seat map opens.
 
-Made for [Grand Cinema Sunshine Ikebukuro](https://www.cinemasunshine.co.jp/theater/gdcs/). No movie, date or booking link is hardcoded. Related project: [109 Cinemas Seat Sniper](https://github.com/MithunThangaraj/109Cinemas-Seat-Sniper).
+**[Get the script](cinema-retry.user.js)** · **[Setup & troubleshooting](docs/guide.md)** · **[My movies](WATCHED.md)**
 
-<img src="assets/grand-cinema-sunshine.png" alt="Grand Cinema Sunshine Ikebukuro building" width="420">
+## Get started
 
-Building image from [Cinema Sunshine's official introduction](https://www.cinemasunshine.co.jp/pages/gdcs). © Cinema Sunshine. Used here as a theatre reference.
+1. Install [Tampermonkey](https://www.tampermonkey.net/). In Chrome, open **Extensions → Tampermonkey → Details → Allow User Scripts**.
+2. Open [the script as text](cinema-retry.txt), copy everything, and paste it into Tampermonkey → **Create a new script**. Save.
+3. Log in on the [cinema website](https://www.cinemasunshine.co.jp/theater/gdcs/), open your screening's booking page, and click **Start retries** at the bottom right.
 
-## Membership and booking times
+That's it. For a timed start, expand **Start at opening time**, enter the date and time in **JST**, then click Start. Keep the tab open and the computer awake.
 
-The current membership is **moviegoer's CLUB**, which replaced Cinema Sunshine Rewards in February 2026. It costs **¥500 per year including tax**. Register online before trying the member booking window. [Official membership page](https://www.cinemasunshine.co.jp/pages/moviegoers-club/)
+It stops at seat selection and alerts you. Pick your seats and finish booking yourself. It pauses on recognised queues, login and verification screens, and stops after 30 minutes of retries. It cannot skip a queue or guarantee tickets. [Full guide](docs/guide.md#use-it)
 
-| Membership | Online booking opens, Japan time |
+## When booking opens
+
+**moviegoer's CLUB costs ¥500 per year.** Join before the member sale starts.
+
+| Your membership | Booking opens (Japan time) |
 | --- | --- |
-| Platinum | 3 days before the screening, **20:30** |
-| Bronze / Gold | 3 days before the screening, **21:00** |
-| Non-member | 2 days before the screening, **00:00** |
+| Platinum | **3 days before, 20:30** — up to 2 tickets in the earliest window |
+| Bronze / Gold | **3 days before, 21:00** |
+| Non-member | **2 days before, 00:00** |
 
-For a Friday screening, Platinum opens Tuesday at 20:30, Bronze/Gold Tuesday at 21:00, and general booking Wednesday at midnight. Some special screenings have different sale times. Check the screening notice. [Official booking FAQ](https://www.cinemasunshine.co.jp/qa/)
+For a Friday show: Tuesday evening for members, Wednesday midnight for general sale. Special screenings may differ.
 
-### How Platinum works
+Platinum needs **6 eligible visits in the previous 3 months**. Gold needs 3–5, Bronze 0–2. Ranks update on the 1st of each month.
 
-Ranks update on the **1st of each month**, based on eligible visits during the previous three months:
+[Official membership rules](https://www.cinemasunshine.co.jp/pages/moviegoers-club/) · [Booking FAQ](https://www.cinemasunshine.co.jp/qa/) — checked 21 October 2026.
 
-| Rank | Visits |
-| --- | --- |
-| Bronze | 0–2 |
-| Gold | 3–5 |
-| Platinum | 6 or more |
+## Why Theatre 12?
 
-Platinum's 20:30 window has a **two-ticket limit**. Membership alone does not immediately give Platinum. The normal purchase limit is six tickets. Early access does not guarantee tickets. [Membership rules](https://www.cinemasunshine.co.jp/pages/moviegoers-club/) · [Ticket limits](https://www.cinemasunshine.co.jp/qa/)
+Grand Cinema Sunshine Ikebukuro's IMAX GT screen can show the tall **1.43:1** image when a film supports it. The comparison below shows the extra picture area.
 
-Log in before purchasing so eligible visits count. Free reward tickets and invitation tickets do not count towards rank. All ranks get the Thursday ¥1,300 member price, three-point ¥1,300 coupons and six-point free tickets. IMAX, special seats and other premium formats can cost extra. [Benefits](https://www.cinemasunshine.co.jp/pages/moviegoers-club/) · [Extra charges](https://www.cinemasunshine.co.jp/qa/)
+![Standard screen and IMAX with Laser image comparison](assets/imax-comparison-english.png)
 
-Rules checked on **21 October 2026**. Use the official pages for changes and screening exceptions.
+Image: [Cinema Sunshine press release](https://prtimes.jp/main/html/rd/p/000000026.000006849.html). Japanese label replaced with English.
 
-## Install in Chrome
+## Where to sit
 
-1. Install [Tampermonkey](https://www.tampermonkey.net/).
-2. Open `chrome://extensions`, find Tampermonkey, open **Details**, and enable **Allow User Scripts**. If that option is missing, see [Tampermonkey's setup instructions](https://www.tampermonkey.net/faq.php#Q209).
-3. In Tampermonkey, choose **Create a new script**.
-4. Open [cinema-retry.user.js](cinema-retry.user.js), copy its contents, replace the editor contents and save with `Cmd+S` or `Ctrl+S`.
-5. Reload your booking tab. The retry controls should appear at the bottom right on `transaction.ticket-cinemasunshine.com`.
+**My pick for the most immersive experience: the centre of row H or J**, around seats **20–21**. The screen fills more of your view here. If you prefer seeing the whole frame with less looking up, try farther back.
 
-If downloading JavaScript is awkward, [cinema-retry.txt](cinema-retry.txt) has exactly the same code.
+![Theatre 12 seating chart](assets/theatre-12-seats.png)
 
-## Use it
+Seat map from [eco's Theatre 12 guide](https://note.com/cinema_apple0520/n/n5c33d4e39519?hl=en), kept unchanged. The author's own favourite is row P; H/J is my immersion-first recommendation. This is a static reference; its shading is not live seat availability. Check the booking page before choosing.
 
-1. Log in normally, choose the cinema, movie, date and screening on the official site, and open its booking link.
-2. On the transaction page, click **Start retries**. Leave the optional start time empty to retry immediately, every 10 seconds.
-3. To wait for the opening time, enter its date and time first. This input always means **Japan time (JST)**, even if your computer uses another timezone. The first refresh is scheduled for that time, then every 10 seconds.
-4. Keep the tab open and your computer awake. Click **Pause retries** whenever needed.
-5. At `#/purchase/seat`, refreshing stops and the script requests a notification. Choose your seats and finish booking yourself.
+## Keep track of your visits
 
-The 30-minute limit starts at the chosen start time, or when you start immediately. A normal refresh keeps the run active in that tab. Closing the tab ends the run.
-
-### When it pauses
-
-- A recognised waiting-room or queue message tells you to wait.
-- Login, verification, CAPTCHA or an expired-session message appears.
-- The URL reaches another purchase step.
-- You press Pause or the time limit expires.
-
-Follow the page instructions when it pauses. After logging in again, return to the booking page and check the controls before restarting.
-
-This refreshes an entry page. It cannot jump a queue or guarantee first place. It does not choose seats or pay. A browser network-error page cannot run the script, and changed routes or unfamiliar messages may need a script update. Notifications depend on browser permissions, and background tabs can delay timers.
-
-The congestion-page behaviour has not been tested live. Local tests cover retry timing, reload persistence, scheduling and stop conditions. No full booking URL or member token is stored by the script.
-
-## Movies watched
-
-[My watch history](WATCHED.md)
-
-The tracker saves the movie, date, time, cinema, screen, seat, format and notes. It is a personal log, entered manually after watching. It does not sync with your membership account or calculate your official rank.
-
-With Python 3, run this from the repository folder (replace the example with your visit):
+Download or clone the repo, then run:
 
 ```bash
-python3 tracker.py add --movie "Movie title" --date 2026-10-30 --time 19:00 --screen 12 --seat "N-20" --format "IMAX GT"
+python3 tracker.py
 ```
 
-The cinema defaults to Grand Cinema Sunshine Ikebukuro. Use `--cinema` for another location, and `--notes` for anything you want to remember.
+Choose **Add a movie** and answer the questions: movie, date, time, cinema, screen, seat, format and notes. You can view, edit or delete entries from the same menu. Python 3 is required.
 
-```bash
-python3 tracker.py list
-python3 tracker.py edit 1 --seat "N-21" --notes "Good view"
-python3 tracker.py delete 1
-```
+On Mac, you can also double-click **Open Movie Tracker.command** from the downloaded folder.
 
-Each change updates [data/watched.csv](data/watched.csv) and [WATCHED.md](WATCHED.md). You can also edit the CSV and run `python3 tracker.py export`. Nothing uploads automatically. Commit those two files when you want the log updated on GitHub.
+Your entries go into [data/watched.csv](data/watched.csv) and the readable [My movies table](WATCHED.md). Nothing syncs or uploads automatically. [Command-line options](docs/guide.md#movies-watched)
 
-## Checks
+---
 
-```bash
-node --test tests/retry.test.cjs
-python3 -m unittest discover -s tests
-```
-
-Independent personal helper, not affiliated with Cinema Sunshine. Follow the cinema's instructions and booking rules.
+Related: [109 Cinemas Seat Sniper](https://github.com/MithunThangaraj/109Cinemas-Seat-Sniper). Independent personal project. The live congestion page still needs testing.
