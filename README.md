@@ -1,65 +1,45 @@
-# Cinema Sunshine Fastpass
+# Grand Cinema Sunshine Fastpass
 
-Refresh a busy Cinema Sunshine booking page every 10 seconds. Stop when the seat map opens.
+## My watch log
 
-**[Get the script](cinema-retry.user.js)** · **[Setup & troubleshooting](docs/guide.md)** · **[My movies](WATCHED.md)**
+- **Odyssey** — 2026/10/11 — **K-31**
+- **Odyssey** — 2026/09/26 — **J-21**
+- **Spider-Man: Brand New Day** — 2026/08/27 — **F-23**
+- **Interstellar** — 2026/07/16 — **B-33**
+- **Avatar: Fire and Ash** — 2025/12/31 — **H-21**
 
-## Get started
+I only used this script for the latest Odyssey booking, K-31. I got in at **21:00:01** and picked the best seat still available. K-31 wasn't a good seat for me, but Platinum members had already had their earlier booking window. The script doesn't guarantee a good seat.
 
-1. Install [Tampermonkey](https://www.tampermonkey.net/). In Chrome, open **Extensions → Tampermonkey → Details → Allow User Scripts**.
-2. Open [the script as text](cinema-retry.txt), copy everything, and paste it into Tampermonkey → **Create a new script**. Save.
-3. Log in on the [cinema website](https://www.cinemasunshine.co.jp/theater/gdcs/), open your screening's booking page, and click **Start retries** at the bottom right.
+## How to use
 
-That's it. For a timed start, expand **Start at opening time**, enter the date and time in **JST**, then click Start. Keep the tab open and the computer awake.
+1. Install [Tampermonkey](https://www.tampermonkey.net/). In Chrome's extension settings, enable **Allow User Scripts** for it.
+2. Copy [this script](cinema-retry.user.js) into Tampermonkey → **Create a new script**, then save.
+3. Open your screening's **member booking link**, which starts with `https://login.member.cinemasunshine.co.jp/auth?redirect_uri=...`. The script remembers it automatically.
 
-It stops at seat selection and alerts you. Pick your seats and finish booking yourself. It pauses on recognised queues, login and verification screens, and stops after 30 minutes of retries. It cannot skip a queue or guarantee tickets. [Full guide](docs/guide.md#use-it)
+If Cinema Sunshine sends you to `#/congestion`, the script immediately retries your original booking link. It checks for that route every 50 milliseconds. It leaves `#/purchase/seat` alone so you can choose seats and finish booking.
 
-## When booking opens
+There is no Start button or timer to set. Open the correct booking link when your sale window begins. Disable the script in Tampermonkey to stop retries. Use one booking tab at a time: opening another screening's member link replaces the saved link. The saved link stays in Tampermonkey storage until replaced, so open the correct one each time. No booking link or member token is included in this repo.
 
-**moviegoer's CLUB costs ¥500 per year.** Join before the member sale starts.
+## Booking times
 
-| Your membership | Booking opens (Japan time) |
-| --- | --- |
-| Platinum | **3 days before, 20:30** — up to 2 tickets in the earliest window |
-| Bronze / Gold | **3 days before, 21:00** |
-| Non-member | **2 days before, 00:00** |
+The **¥500 yearly moviegoer's CLUB membership** gives early access:
 
-For a Friday show: Tuesday evening for members, Wednesday midnight for general sale. Special screenings may differ.
+- **Platinum:** 3 days before, **20:30 JST**. Up to 2 tickets in the earliest window.
+- **Bronze / Gold:** 3 days before, **21:00 JST**.
+- **Non-members:** 2 days before, **00:00 JST**.
 
-Platinum needs **6 eligible visits in the previous 3 months**. Gold needs 3–5, Bronze 0–2. Ranks update on the 1st of each month.
+For a Friday show, member booking starts Tuesday evening. General booking starts Wednesday at midnight.
 
-[Official membership rules](https://www.cinemasunshine.co.jp/pages/moviegoers-club/) · [Booking FAQ](https://www.cinemasunshine.co.jp/qa/) — checked 21 October 2026.
+Platinum requires 6 eligible visits in the previous 3 months. Gold requires 3–5. Ranks update on the 1st of each month. Special screenings may have different sale times. [Official membership rules](https://www.cinemasunshine.co.jp/pages/moviegoers-club/) · [Booking FAQ](https://www.cinemasunshine.co.jp/qa/)
 
-## Why Theatre 12?
+## Why IMAX GT
 
-Grand Cinema Sunshine Ikebukuro's IMAX GT screen can show the tall **1.43:1** image when a film supports it. The comparison below shows the extra picture area.
+Grand Cinema Sunshine uses digital laser projection, not 70mm film. For films with a full-height IMAX version, it can still show the same **1.43:1 aspect ratio** as IMAX 70mm. [About IMAX GT](https://www.cinemasunshine.co.jp/pages/gdcs)
 
-![Standard screen and IMAX with Laser image comparison](assets/imax-comparison-english.png)
+![Standard screen compared with IMAX](assets/imax-comparison-english.png)
 
-Image: [Cinema Sunshine press release](https://prtimes.jp/main/html/rd/p/000000026.000006849.html). Japanese label replaced with English.
+**My pick for the most immersive experience: the centre of row H or J, around seats 20–21.** Sit farther back if you prefer seeing the whole screen with less looking up.
 
-## Where to sit
+![IMAX GT seat map](assets/theatre-12-seats.png)
 
-**My pick for the most immersive experience: the centre of row H or J**, around seats **20–21**. The screen fills more of your view here. If you prefer seeing the whole frame with less looking up, try farther back.
-
-![Theatre 12 seating chart](assets/theatre-12-seats.png)
-
-Seat map from [eco's Theatre 12 guide](https://note.com/cinema_apple0520/n/n5c33d4e39519?hl=en), kept unchanged. The author's own favourite is row P; H/J is my immersion-first recommendation. This is a static reference; its shading is not live seat availability. Check the booking page before choosing.
-
-## Keep track of your visits
-
-Download or clone the repo, then run:
-
-```bash
-python3 tracker.py
-```
-
-Choose **Add a movie** and answer the questions: movie, date, time, cinema, screen, seat, format and notes. You can view, edit or delete entries from the same menu. Python 3 is required.
-
-On Mac, you can also double-click **Open Movie Tracker.command** from the downloaded folder.
-
-Your entries go into [data/watched.csv](data/watched.csv) and the readable [My movies table](WATCHED.md). Nothing syncs or uploads automatically. [Command-line options](docs/guide.md#movies-watched)
-
----
-
-Related: [109 Cinemas Seat Sniper](https://github.com/MithunThangaraj/109Cinemas-Seat-Sniper). Independent personal project. The live congestion page still needs testing.
+[Seat map reference](https://note.com/cinema_apple0520/n/n5c33d4e39519?hl=en). Check the live booking page for availability.
