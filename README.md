@@ -1,6 +1,6 @@
 # Grand Cinema Sunshine Fastpass
 
-## My watch log
+## Personal watch log
 
 - **Odyssey** — 2026/10/11 — **K-31**
 - **Odyssey** — 2026/09/26 — **J-21**
